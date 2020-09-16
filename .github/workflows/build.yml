@@ -1,0 +1,32 @@
+name: Build, push and deploy Docker image
+
+on:
+  push:
+    branches:
+      - master
+
+# Enables BuildKit
+env:
+  DOCKER_BUILDKIT: 1
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+
+      - name: "Build and push image"
+        uses: docker/build-push-action@v1
+        with:
+          dockerfile: Dockerfile
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: thecodingmachine/workadventure-back-base
+          tags: latest
+          add_git_labels: true
