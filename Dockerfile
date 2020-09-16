@@ -1,6 +1,6 @@
 FROM thecodingmachine/nodejs:12
 
-RUN sudo apt-get update && sudo apt-get install unzip
+RUN sudo apt-get update && sudo apt-get install unzip inotify-tools
 RUN mkdir protobuf && cd protobuf \
     && curl -L -o protobuf.zip https://github.com/protocolbuffers/protobuf/releases/download/v3.13.0/protoc-3.13.0-linux-x86_64.zip \
     && unzip protobuf.zip \
