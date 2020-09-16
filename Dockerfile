@@ -1,4 +1,4 @@
-FROM thecodingmachine/nodejs:14
+FROM thecodingmachine/nodejs:12
 
 RUN sudo apt-get update && sudo apt-get install unzip
 RUN mkdir protobuf && cd protobuf \
