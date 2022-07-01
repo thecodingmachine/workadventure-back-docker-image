@@ -5,7 +5,7 @@ on:
     branches:
       - master
   schedule:
-    - cron:  '42 3 * * 1'
+    - cron:  '24 3 * * 1'
 
 # Enables BuildKit
 env:
@@ -16,6 +16,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - node_version: '16'
+          - node_version: '18'
 
     steps:
 
@@ -37,10 +42,13 @@ jobs:
       -
         name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           push: true
-          tags: thecodingmachine/workadventure-back-base:latest
+          tags: thecodingmachine/workadventure-back-base:v1-${{ matrix.node_version }}
+          platforms: linux/amd64,linux/arm64
+          build-args: |
+            NODE_VERSION=${{ matrix.node_version }}
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
